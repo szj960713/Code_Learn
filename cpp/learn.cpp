@@ -3,8 +3,41 @@
 #include <cmath>
 using namespace std;
 
+int gcd (int a, int b) {
+    if (b == 0){
+		return a;
+	}else{
+		return gcd(b, a % b);
+	}
+}
+
 int main () {
-    int times = 0, level = 0;
+    int a, b, c;
+    cin >> a >> b >> c;
+    int num1, num2;
+    num1 = (a > b ? a : b) > c ? (a > b ? a : b) : c;
+    num2 = (a < b ? a : b) < c ? (a < b ? a : b) : c;
+    int tmp = gcd(num1, num2);
+    cout << num2 / tmp << "/" << num1 / tmp;
+}
+
+void Product_Max () {
+    int n = 0, m = 0;
+    cin >> n >> m;
+    int a = n / m;
+    int b = n % m;
+    for (int i = 0; i < a - b + 1; i++) {
+        cout << a << " ";
+    }
+    for (int i = 0; i < b; i++) {
+        cout << a + 1 << " ";
+    }   
+}
+
+// 完全平方数是指一个数可以分解为某个因数的平方
+
+void Mc_Ex () {
+        int times = 0, level = 0;
     long long ex = 0;
     float hp = 10;
     cin >> times;
@@ -36,39 +69,39 @@ int main () {
     }
 }
 
-void Rects_nested_Rects () {
-    int width, height, times, key;
-    cin >> width >> height >> times >> key;
-    int arr[width][height][2] = {0};
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            arr[i][j][1] = 0;
-            arr[i][j][0] = 0;
-        }
-    }
-    for (int i = 0; i < times; i++) {
-        int x1, y1, x2, y2;
-        cin >> x1 >> y1 >> x2 >> y2;
-        for (int j = x1 - 1; j < x2; j ++) {
-            for (int k = y1 - 1; k < y2; k++) {
-                arr[j][k][0] = i + 1;
-                arr[j][k][1] += 1;
-            }
-        }
-    }
-    string s;
-    for (int i = 0; i < key; i++) {
-        string tmp;
-        int x, y;
-        cin >> x >> y;
-        if (arr[x - 1][y - 1][1] == 0) {
-            s += "N\n";
-        } else {
-            s += "Y " + to_string(arr[x - 1][y - 1][1]) + " " + to_string(arr[x - 1][y - 1][0]) + "\n";
-        }
-    }
-    cout << s;
-}
+// void Rects_nested_Rects () {
+//     int width, height, times, key;
+//     cin >> width >> height >> times >> key;
+//     int arr[width][height][2] = {0};
+//     for (int i = 0; i < width; i++) {
+//         for (int j = 0; j < height; j++) {
+//             arr[i][j][1] = 0;
+//             arr[i][j][0] = 0;
+//         }
+//     }
+//     for (int i = 0; i < times; i++) {
+//         int x1, y1, x2, y2;
+//         cin >> x1 >> y1 >> x2 >> y2;
+//         for (int j = x1 - 1; j < x2; j ++) {
+//             for (int k = y1 - 1; k < y2; k++) {
+//                 arr[j][k][0] = i + 1;
+//                 arr[j][k][1] += 1;
+//             }
+//         }
+//     }
+//     string s;
+//     for (int i = 0; i < key; i++) {
+//         string tmp;
+//         int x, y;
+//         cin >> x >> y;
+//         if (arr[x - 1][y - 1][1] == 0) {
+//             s += "N\n";
+//         } else {
+//             s += "Y " + to_string(arr[x - 1][y - 1][1]) + " " + to_string(arr[x - 1][y - 1][0]) + "\n";
+//         }
+//     }
+//     cout << s;
+// }
 
 void Mc_Torch () {
     // 最大矩阵为100x100, 直接取104x104矩阵保证n无论多大都不会有index溢出现象
