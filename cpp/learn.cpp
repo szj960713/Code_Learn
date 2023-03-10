@@ -3,6 +3,42 @@
 #include <cmath>
 using namespace std;
 
+int main () {
+    int num = 0, ans = 0, now = 0;
+    cin >> num;
+    int floors[10001] = {0};
+    for (int i = 0; i < num; i++) {
+        cin >> floors[i];
+    }
+    for (int i = 1; i < num; i++) {
+        for (int j = 0; j < num - i; j++) {
+            if (floors[j] > floors[j + 1]) {
+                int tmp = floors[j];
+                floors[j] = floors[j + 1];
+                floors[j + 1] = tmp;
+            }
+        }
+    }
+    for (int i = 0; i < num; i++) {
+        if (i == 0) {
+            ans += (floors[i] - now) * 6 + 6;
+        } else {
+            if (floors[i] == floors[i - 1]) {
+                ans += 1;
+            } else {
+                ans += (floors[i] - now) * 6 + 6;
+            }
+        }
+        now = floors[i];
+    }
+    ans += now * 4;
+    cout << ans;
+}
+
+void Elevator () {
+    cout << 1;
+}
+
 int gcd (int a, int b) {
     if (b == 0){
 		return a;
@@ -11,48 +47,41 @@ int gcd (int a, int b) {
 	}
 }
 
-int main () {
-    int a, b, c;
-    cin >> a >> b >> c;
-    int num1, num2;
-    num1 = (a > b ? a : b) > c ? (a > b ? a : b) : c;
-    num2 = (a < b ? a : b) < c ? (a < b ? a : b) : c;
-    int tmp = gcd(num1, num2);
-    cout << num2 / tmp << "/" << num1 / tmp;
-}
 
 void Product_Max () {
     int n = 0, m = 0;
     cin >> n >> m;
     int a = n / m;
     int b = n % m;
-    for (int i = 0; i < a - b + 1; i++) {
+    for (int i = 0; i < m - b; i++) {
         cout << a << " ";
     }
     for (int i = 0; i < b; i++) {
         cout << a + 1 << " ";
-    }   
+    }  
 }
 
 // 完全平方数是指一个数可以分解为某个因数的平方
 
+// 这道题数据的坑在于c++的浮点数误差，导致了0.2 - 0.2 ！= 0
 void Mc_Ex () {
-        int times = 0, level = 0;
+    int times = 0, level = 0;
     long long ex = 0;
-    float hp = 10;
+    double hp = 100;
     cin >> times;
     float tmp1;
     int tmp2;
     for (int i = 0; i < times; i++) {
         cin >> tmp1 >> tmp2;
-        hp -= tmp1;
-        if (hp > 10) {
-            hp = 10;
+        hp -= tmp1 * 10;
+        if (hp > 100) {
+            hp = 100;
         }
         if (hp <= 0) {
             break;
         }
         ex += tmp2;
+        // cout << hp << " " << ex << endl;
     }
     for (int i = 0;;i++) {
         ex -= pow(2, i);
